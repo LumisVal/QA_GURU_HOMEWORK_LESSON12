@@ -26,3 +26,4 @@ def setup_browser():
     yield
 
     driver.quit()
+
