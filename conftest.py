@@ -1,4 +1,3 @@
-import os
 import allure
 import pytest
 
@@ -27,7 +26,11 @@ def attach_browser_logs():
     try:
         logs = browser.driver.get_log("browser")
         log_text = "\n".join(str(log) for log in logs)
-        allure.attach(log_text, name='browser_logs', attachment_type=allure.attachment_type.TEXT)
+        allure.attach(
+            log_text,
+            name='browser_logs',
+            attachment_type=allure.attachment_type.TEXT
+        )
     except Exception:
         pass
 

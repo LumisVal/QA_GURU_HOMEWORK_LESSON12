@@ -16,3 +16,4 @@ student = User(
     state='NCR',
     city='Delhi',
 )
+
