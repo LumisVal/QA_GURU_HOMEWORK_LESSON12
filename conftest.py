@@ -5,6 +5,17 @@ from selene import browser
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
+from config import (
+    BASE_URL,
+    SELENOID_URL,
+    LOGIN,
+    PASSWORD,
+    BROWSER_NAME,
+    BROWSER_VERSION,
+    HEADLESS,
+    WINDOW_SIZE,
+)
+
 
 def attach_screenshot():
     allure.attach(
@@ -49,7 +60,18 @@ def attach_video():
 @pytest.fixture(scope='function', autouse=True)
 def setup_browser():
     options = Options()
-    options.set_capability("browserName", "chrome")
+
+    options.set_capability("browserName", BROWSER_NAME)
+
+    if BROWSER_VERSION:
+        options.set_capability("browserVersion", BROWSER_VERSION)
+
+    if HEADLESS:
+        options.add_argument("--headless=new")
+
+    width, height = WINDOW_SIZE.split("x")
+    options.add_argument(f"--window-size={width},{height}")
+
     options.set_capability("selenoid:options", {
         "enableVNC": True,
         "enableVideo": True,
@@ -57,14 +79,14 @@ def setup_browser():
     })
 
     driver = webdriver.Remote(
-        command_executor="https://user1:1234@selenoid.autotests.cloud/wd/hub",
+        command_executor=f"https://{LOGIN}:{PASSWORD}@{SELENOID_URL}",
         options=options
     )
 
     browser.config.driver = driver
-    browser.config.window_width = 1920
-    browser.config.window_height = 1080
-    browser.config.base_url = "https://demoqa.com"
+    browser.config.base_url = BASE_URL
+    browser.config.window_width = int(width)
+    browser.config.window_height = int(height)
 
     yield
 
