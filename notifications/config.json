@@ -1,9 +1,9 @@
 {
   "base": {
-    "project": "some project",
-    "environment": "some env",
-    "comment": "some comment",
-    "reportLink": "",
+    "project": "Telegram_14",
+    "environment": "Jenkins",
+    "comment": "Автотесты DemoQA",
+    "reportLink": "http://jenkins.autotests.cloud/job/Telegram_14/lastBuild/allure/",
     "language": "ru",
     "allureFolder": "allure-report",
     "enableChart": true
